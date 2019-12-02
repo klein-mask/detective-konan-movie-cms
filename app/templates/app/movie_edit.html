@@ -1,0 +1,24 @@
+{% extends "app/base.html" %}
+{% load bootstrap4 %}
+
+{% block title %}映画情報の編集{% endblock title %}
+
+{% block content %}
+	<h4 class="mt-4 border-bottom  mb-5 mt-3 text-center">映画情報の編集</h4>
+
+	{% if movie_id %}
+		<form action="{% url 'app:movie_edit' movie_id=movie_id %}" method="post">
+	{% else %}
+		<form action="{% url 'app:movie_add' %}" method="post">
+	{% endif %}
+
+		{% csrf_token %}
+		{% bootstrap_form form layout='horizontal' %}
+		<div class="form-group row mt-4">
+			<div class="offset-md-3 col-md-9 text-right">
+				<button type="submit" class="btn btn-outline-info">保存</button>
+				<a href="{% url 'app:movie_list' %}" class="btn btn-outline-danger" role="button">戻る</a>
+			</div>
+		</div>
+	</form>
+{% endblock content %}

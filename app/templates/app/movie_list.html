@@ -1,0 +1,47 @@
+{% extends "app/base.html" %}
+
+{% block title %}歴代映画の一覧{% endblock title %}
+
+{% block content %}
+	<h4 class="mt-4 border-bottom text-center"><a href="{% url 'app:movie_list' %}">歴代映画の一覧</a></h4>
+	<p class="text-right font-weight-bold mt-3">ユーザー名：{{ user.username }}</p>
+	<div class="text-right mr-4 mb-3 mt-3">
+		<a href="{% url 'app:movie_add' %}" class="btn btn-info my-3" role="button">追加</a>
+		<a href="{% url 'app:movie_regist_all' %}" class="btn btn-success my-3" role="button">全て追加</a>
+		<a href="{% url 'app:movie_del_all' %}" class="btn btn-danger my-3" role="button">全て削除</a>
+		<a href="{% url 'login:logout' %}" class="btn btn-secondary my-3" role="button">ログアウト</a>
+	</div>
+
+	<div class="my-4 center">
+		<form method="POST" action="{% url 'app:movie_sort' %}">
+            {% for field in choice %}
+            {{ field }}
+            {% endfor %}
+			{% csrf_token %}
+			<button type="submit" class="btn btn-outline-info">並び替え</button>
+        </form>
+	</div>
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr class="text-center">
+			{% for column in columns %}
+				<th scope="col">{{ column }}</th>
+			{% endfor %}
+				<th scope="col">アクション</th>
+			</tr>
+		</thead>
+		<tbody class="text-center">
+			{% for movie in movies %}
+			<tr>
+			<th scope="row">{{ movie.title }}</th>
+			<td>{{ movie.release_date }}</td>
+			<td>{{ movie.income_str }}</td>
+			<td>
+				<a href="{% url 'app:movie_edit' movie_id=movie.id %}" class="btn btn-outline-primary btn-sm mr-2" role="button">修正</a>
+				<a href="{% url 'app:movie_del' movie_id=movie.id %}" class="btn btn-outline-danger btn-sm ml-2" role="button">削除</a>
+			</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock content %}

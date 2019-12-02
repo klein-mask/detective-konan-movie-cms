@@ -1,0 +1,15 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+django = "*"
+django-bootstrap4 = "*"
+selenium = "*"
+chromedriver-binary = "==78.0.3904.105"
+
+[requires]
+python_version = "3.7"
